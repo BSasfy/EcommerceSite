@@ -4,6 +4,10 @@ import rootReducer from './reducers'
 
 const initialState = {};
 
+if(localStorage.getItem('cartItems')) {
+    initialState.cart = {items: JSON.parse(localStorage.getItem('cartItems'))}
+}
+
 const composeEnhancer = window._REDUX_DEVTOOLS_EXTENSION_COMPOSE_ || compose;
 export default createStore(rootReducer, initialState, composeEnhancer(applyMiddleware(thunk)));
 

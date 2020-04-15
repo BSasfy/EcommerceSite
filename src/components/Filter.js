@@ -8,7 +8,7 @@ class Filter extends Component {
             <div>
                 <div className="row">
                 <div className="col-md-4">
-                    {this.props.count} products found.
+                    {this.props.filterProducts.length} products found.
                 </div>
                 <div className="col-md-4">
                     <label>
