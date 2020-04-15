@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Products from './components/Products';
 import Filter from './components/Filter';
@@ -12,6 +11,7 @@ class App extends Component {
     this.handleChangeSort = this.handleChangeSort.bind(this);
     this.handleChangeSize = this.handleChangeSize.bind(this);
     this.handleAddToCart = this.handleAddToCart.bind(this);
+    this.handleRemoveFromCart = this.handleRemoveFromCart.bind(this);
   }
   componentWillMount(){
     fetch("http://localhost:8000/products").then(res => res.json())
@@ -19,6 +19,9 @@ class App extends Component {
       products: data,
       fileredProducts: data
     }));
+    if(localStorage.getItem('cartItems')){
+      this.setState({cartItems: JSON.parse(localStorage.getItem('cartItems'))});
+    }
   }
 
   handleChangeSort(e){
@@ -64,6 +67,13 @@ class App extends Component {
       }
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
       return cartItems;
+    })
+  }
+  handleRemoveFromCart(e, item){
+    this.setState(state=>{
+      const cartItems = state.cartItems.filter(elm => elm.id!== item.id);
+      localStorage.setItem('cartItems', cartItems);
+      return {cartItems};
     })
   }
   render() {
